@@ -34,9 +34,9 @@ namespace SignalCorrectionApp
             this.panel1 = new System.Windows.Forms.Panel();
             this.outputSignalTextBox = new System.Windows.Forms.RichTextBox();
             this.interruptedSignalTextBox = new System.Windows.Forms.RichTextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.redundantInfoSizeTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.realDataSizeTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.outputSignalNoControlDataTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -63,9 +63,9 @@ namespace SignalCorrectionApp
             // 
             this.panel1.Controls.Add(this.outputSignalTextBox);
             this.panel1.Controls.Add(this.interruptedSignalTextBox);
-            this.panel1.Controls.Add(this.textBox3);
+            this.panel1.Controls.Add(this.redundantInfoSizeTextBox);
             this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.realDataSizeTextBox);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.outputSignalNoControlDataTextBox);
             this.panel1.Controls.Add(this.label8);
@@ -98,30 +98,30 @@ namespace SignalCorrectionApp
             this.interruptedSignalTextBox.TabIndex = 14;
             this.interruptedSignalTextBox.Text = "";
             // 
-            // textBox3
+            // redundantInfoSizeTextBox
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(74, 576);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(206, 24);
-            this.textBox3.TabIndex = 13;
+            this.redundantInfoSizeTextBox.Enabled = false;
+            this.redundantInfoSizeTextBox.Location = new System.Drawing.Point(74, 576);
+            this.redundantInfoSizeTextBox.Name = "redundantInfoSizeTextBox";
+            this.redundantInfoSizeTextBox.Size = new System.Drawing.Size(206, 24);
+            this.redundantInfoSizeTextBox.TabIndex = 13;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(71, 554);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(194, 18);
+            this.label10.Size = new System.Drawing.Size(190, 18);
             this.label10.TabIndex = 12;
-            this.label10.Text = "Redundand Information Size";
+            this.label10.Text = "Redundant Information Size";
             // 
-            // textBox2
+            // realDataSizeTextBox
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(74, 497);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(206, 24);
-            this.textBox2.TabIndex = 11;
+            this.realDataSizeTextBox.Enabled = false;
+            this.realDataSizeTextBox.Location = new System.Drawing.Point(74, 497);
+            this.realDataSizeTextBox.Name = "realDataSizeTextBox";
+            this.realDataSizeTextBox.Size = new System.Drawing.Size(206, 24);
+            this.realDataSizeTextBox.TabIndex = 11;
             // 
             // label9
             // 
@@ -326,9 +326,9 @@ namespace SignalCorrectionApp
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.TextBox bitsToDistortTextBox;
         private System.Windows.Forms.Label label3;
-        private TextBox textBox3;
+        private TextBox redundantInfoSizeTextBox;
         private Label label10;
-        private TextBox textBox2;
+        private TextBox realDataSizeTextBox;
         private Label label9;
         private TextBox outputSignalNoControlDataTextBox;
         private Label label8;
