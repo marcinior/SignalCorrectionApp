@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SignalCorrectionApp.Classes
 {
-    internal abstract class AlgorithmBase
+    public abstract class AlgorithmBase
     {
         private string _inputSignal;
 
         public abstract string GetEncodedSignal();
 
-        public abstract Tuple<string, int[]> GetInterruptedSignal(); //returns binary string and positions of distorted bits
+        public abstract string GetInterruptedSignal(IList<int> distortedBits); //returns binary string and positions of distorted bits
 
         public abstract string GetDecodedSignal(); //returns decoded signal (without control data)
 
@@ -23,7 +24,7 @@ namespace SignalCorrectionApp.Classes
                 if (int.TryParse(value, out int parsedNumber))
                 {
                     this._inputSignal = Convert.ToString(parsedNumber, 2);
-                    RealDataSize = this._inputSignal.Length;
+                    RealDataSize = this._inputSignal.Length.ToString();
                 }
                 else
                 {
@@ -32,6 +33,6 @@ namespace SignalCorrectionApp.Classes
             }
         }
 
-        public int RealDataSize { get; private set; } //size of input signal (bits)
+        public string RealDataSize { get; private set; } //size of input signal (bits)
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using SignalCorrectionApp.Classes;
 
 namespace SignalCorrectionApp
 {
@@ -18,6 +15,8 @@ namespace SignalCorrectionApp
             InitializeComponent();
         }
 
+        private IList<int> bitsToDistort;
+
         private void sendButton_Click(object sender, EventArgs e)
         {
             const string parity = "Parity Control";
@@ -25,7 +24,7 @@ namespace SignalCorrectionApp
             const string crc12 = "CRC 12";
             const string crc16 = "CRC 16";
             const string sdlc = "SDLC";
-            const string sth = "sth"; //TO DO proper name
+            const string atm = "ATM"; 
 
             string caption = Properties.Resources.inputError;
             MessageBoxButtons buttons = MessageBoxButtons.OK;
@@ -36,6 +35,12 @@ namespace SignalCorrectionApp
                 return;
 
             string algorithmChoice = algorithmsComboBox.Text;
+            bitsToDistort = bitsToDistortTextBox.Text.Split(';')
+                .Where(s => s != string.Empty)
+                .Select(s => int.Parse(s))
+                .ToList();
+
+            ClearAllFields();
 
             switch (algorithmChoice)
             {
@@ -46,16 +51,16 @@ namespace SignalCorrectionApp
                     manageHammingCode();
                     break;
                 case crc12:
-                    manageCrc12();
+                    manageCRC12();
                     break;
                 case crc16:
-                    manageCrc16();
+                    manageCRC16();
                     break;
                 case sdlc:
-                    manageSdlc();
+                    manageSDLC();
                     break;
-                case sth:
-                    manageSth();
+                case atm:
+                    manageATM();
                     break;
             }
         }
@@ -70,24 +75,62 @@ namespace SignalCorrectionApp
 
         }
 
-        private void manageCrc12()
+        private void manageCRC12()
+        {
+            CRC crc12 = new CRC(0x180F);
+            crc12.InputSignal = orginalTextBox.Text;
+            inputSignalTextBox.Text = crc12.InputSignal;
+            encodedSignalTextBox.Text = crc12.GetEncodedSignal();
+            realDataSizeTextBox.Text = crc12.RealDataSize;
+            controlDataSizeTextBox.Text = crc12.GetRedundantInfromationSize().ToString();
+
+            string interruptedSignal = crc12.GetInterruptedSignal(bitsToDistort);
+            interruptedSignalTextBox.AppendTextWithSpecificColor(interruptedSignal, Color.Red, bitsToDistort);
+
+            if (crc12.IsSignalDemaged())
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Red);
+                outputSignalNoControlDataTextBox.AppendText(crc12.GetDecodedSignal(), Color.Red);
+            }
+            else
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Green);
+                outputSignalNoControlDataTextBox.AppendText(crc12.GetDecodedSignal(), Color.Green);
+            }
+        }
+
+        private void manageCRC16()
+        {
+            CRC crc16 = new CRC(0x18005);
+            crc16.InputSignal = orginalTextBox.Text;
+            inputSignalTextBox.Text = crc16.InputSignal;
+            encodedSignalTextBox.Text = crc16.GetEncodedSignal();
+            realDataSizeTextBox.Text = crc16.RealDataSize;
+            controlDataSizeTextBox.Text = crc16.GetRedundantInfromationSize().ToString();
+
+            string interruptedSignal = crc16.GetInterruptedSignal(bitsToDistort);
+            interruptedSignalTextBox.AppendTextWithSpecificColor(interruptedSignal, Color.Red, bitsToDistort);
+
+            if (crc16.IsSignalDemaged())
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Red);
+                outputSignalNoControlDataTextBox.AppendText(crc16.GetDecodedSignal(), Color.Red);
+            }
+            else
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Green);
+                outputSignalNoControlDataTextBox.AppendText(crc16.GetDecodedSignal(), Color.Green);
+            }        
+        }
+
+        private void manageSDLC()
         {
 
         }
 
-        private void manageCrc16()
+        private void manageATM()
         {
 
-        }
-
-        private void manageSdlc()
-        {
-
-        }
-
-        private void manageSth()
-        {
-            //to do change mathod name
         }
 
         private bool isInputTextValid(TextBox textBox, string caption, MessageBoxButtons buttons)
@@ -117,14 +160,6 @@ namespace SignalCorrectionApp
         private bool isBitsToDistortValid(TextBox textBox, string caption, MessageBoxButtons buttons)
         {
             string message = Properties.Resources.bitsDistortError;
-            if (textBox.Text.Equals(String.Empty))
-            {
-                MessageBox.Show(message, caption, buttons);
-                return false;
-            }
-
-            Regex digitsOnly = new Regex(@"[^\d;]");
-            string textWithoutLetters = digitsOnly.Replace("2;1;a;5;", String.Empty);
 
             if (!textBox.Text.All(c => Char.IsDigit(c) || c.Equals(';')))
             {
@@ -133,6 +168,17 @@ namespace SignalCorrectionApp
             }
 
             return true;
+        }
+
+        private void ClearAllFields()
+        {
+            inputSignalTextBox.Clear();
+            encodedSignalTextBox.Clear();
+            interruptedSignalTextBox.Clear();
+            outputSignalTextBox.Clear();
+            outputSignalNoControlDataTextBox.Clear();
+            realDataSizeTextBox.Clear();
+            controlDataSizeTextBox.Clear();
         }
     }
 }

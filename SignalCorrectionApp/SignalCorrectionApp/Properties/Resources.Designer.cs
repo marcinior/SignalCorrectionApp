@@ -70,7 +70,7 @@ namespace SignalCorrectionApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter at least one bit to distort and try again. Remeber use integer figures splitted semicolons..
+        ///   Looks up a localized string similar to Remeber use only integer figures splitted semicolons..
         /// </summary>
         internal static string bitsDistortError {
             get {
@@ -79,7 +79,7 @@ namespace SignalCorrectionApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Indicate bit positions to distort, using integer figures splitted semicolons..
+        ///   Looks up a localized string similar to Indicate bit positions to distort, using only integer figures splitted semicolons..
         /// </summary>
         internal static string bitsDistortTooltip {
             get {

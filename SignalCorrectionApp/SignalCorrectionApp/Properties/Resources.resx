@@ -121,10 +121,10 @@
     <value>Select proper algorithm from list and try again.</value>
   </data>
   <data name="bitsDistortError" xml:space="preserve">
-    <value>Enter at least one bit to distort and try again. Remeber use integer figures splitted semicolons.</value>
+    <value>Remeber use only integer figures splitted semicolons.</value>
   </data>
   <data name="bitsDistortTooltip" xml:space="preserve">
-    <value>Indicate bit positions to distort, using integer figures splitted semicolons.</value>
+    <value>Indicate bit positions to distort, using only integer figures splitted semicolons.</value>
   </data>
   <data name="crc12" xml:space="preserve">
     <value>CRC 12</value>
