@@ -52,11 +52,12 @@ namespace SignalCorrectionApp
             this.label3 = new System.Windows.Forms.Label();
             this.algorithmsComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.orginalTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.bitDistortTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.inputNumberUpDown = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inputNumberUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -226,12 +227,12 @@ namespace SignalCorrectionApp
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.inputNumberUpDown);
             this.groupBox1.Controls.Add(this.sendButton);
             this.groupBox1.Controls.Add(this.bitsToDistortTextBox);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.algorithmsComboBox);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.orginalTextBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox1.Location = new System.Drawing.Point(15, 16);
@@ -302,14 +303,6 @@ namespace SignalCorrectionApp
             this.label2.TabIndex = 0;
             this.label2.Text = "Used Algorithm ";
             // 
-            // orginalTextBox
-            // 
-            this.orginalTextBox.Location = new System.Drawing.Point(10, 83);
-            this.orginalTextBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.orginalTextBox.Name = "orginalTextBox";
-            this.orginalTextBox.Size = new System.Drawing.Size(267, 28);
-            this.orginalTextBox.TabIndex = 0;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -323,6 +316,13 @@ namespace SignalCorrectionApp
             // bitDistortTooltip
             // 
             this.bitDistortTooltip.ShowAlways = true;
+            // 
+            // inputNumberUpDown
+            // 
+            this.inputNumberUpDown.Location = new System.Drawing.Point(10, 83);
+            this.inputNumberUpDown.Name = "inputNumberUpDown";
+            this.inputNumberUpDown.Size = new System.Drawing.Size(266, 28);
+            this.inputNumberUpDown.TabIndex = 1;
             // 
             // Form1
             // 
@@ -344,6 +344,7 @@ namespace SignalCorrectionApp
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inputNumberUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -352,7 +353,6 @@ namespace SignalCorrectionApp
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox orginalTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox algorithmsComboBox;
         private System.Windows.Forms.Label label2;
@@ -374,6 +374,7 @@ namespace SignalCorrectionApp
         private RichTextBox outputSignalNoControlDataTextBox;
         private RichTextBox encodedSignalTextBox;
         private RichTextBox inputSignalTextBox;
+        private NumericUpDown inputNumberUpDown;
     }
 }
 

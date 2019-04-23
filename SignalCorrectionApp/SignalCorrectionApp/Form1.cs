@@ -29,8 +29,7 @@ namespace SignalCorrectionApp
             string caption = Properties.Resources.inputError;
             MessageBoxButtons buttons = MessageBoxButtons.OK;
 
-            if (!isInputTextValid(orginalTextBox, caption, buttons)
-                 || !isAlgorhitmComboBoxValid(algorithmsComboBox, caption, buttons)
+            if (!isAlgorhitmComboBoxValid(algorithmsComboBox, caption, buttons)
                  || !isBitsToDistortValid(bitsToDistortTextBox, caption, buttons))
                 return;
 
@@ -78,7 +77,7 @@ namespace SignalCorrectionApp
         private void manageCRC12()
         {
             CRC crc12 = new CRC(0x180F);
-            crc12.InputSignal = orginalTextBox.Text;
+            crc12.InputSignal = inputNumberUpDown.Value.ToString();
             inputSignalTextBox.Text = crc12.InputSignal;
             encodedSignalTextBox.Text = crc12.GetEncodedSignal();
             realDataSizeTextBox.Text = crc12.RealDataSize;
@@ -102,7 +101,7 @@ namespace SignalCorrectionApp
         private void manageCRC16()
         {
             CRC crc16 = new CRC(0x18005);
-            crc16.InputSignal = orginalTextBox.Text;
+            crc16.InputSignal = inputNumberUpDown.Value.ToString();
             inputSignalTextBox.Text = crc16.InputSignal;
             encodedSignalTextBox.Text = crc16.GetEncodedSignal();
             realDataSizeTextBox.Text = crc16.RealDataSize;
@@ -131,18 +130,6 @@ namespace SignalCorrectionApp
         private void manageATM()
         {
 
-        }
-
-        private bool isInputTextValid(TextBox textBox, string caption, MessageBoxButtons buttons)
-        {
-            if (textBox.Text.Equals(String.Empty))
-            {
-                string message = Properties.Resources.inputTextError;
-                MessageBox.Show(message, caption, buttons);
-                return false;
-            }
-
-            return true;
         }
 
         private bool isAlgorhitmComboBoxValid(ComboBox comboBox, string caption, MessageBoxButtons buttons)
