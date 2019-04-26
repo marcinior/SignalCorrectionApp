@@ -24,7 +24,7 @@ namespace SignalCorrectionApp
             const string crc12 = "CRC 12";
             const string crc16 = "CRC 16";
             const string sdlc = "SDLC";
-            const string atm = "ATM"; 
+            const string atm = "ATM";
 
             string caption = Properties.Resources.inputError;
             MessageBoxButtons buttons = MessageBoxButtons.OK;
@@ -40,31 +40,59 @@ namespace SignalCorrectionApp
                 .ToList();
 
             ClearAllFields();
-
+            AlgorithmBase algorithm;
             switch (algorithmChoice)
             {
-                case parity:
-                    manageParityControl();
-                    break;
+                /*case parity:
+                    //manageParityControl();
+                    break;*/
                 case hamming:
-                    manageHammingCode();
+                    algorithm = new HammingAlgorithm();
+                    //algorithm.encode(inputNumberUpDown.Value.ToString());
+                    //manageHammingCode();
                     break;
                 case crc12:
-                    manageCRC12();
+                    algorithm = new CRC(0x180F);
+                    //manageCRC12();
                     break;
                 case crc16:
-                    manageCRC16();
+                    algorithm = new CRC(0x18005);
+                    //manageCRC16();
                     break;
-                case sdlc:
-                    manageSDLC();
+                /*case sdlc:
+                    //manageSDLC();
                     break;
                 case atm:
-                    manageATM();
-                    break;
+                    //manageATM();
+                    break;*/
+                default:
+                    return;
+            }
+            manage(algorithm);
+        }
+        private void manage(AlgorithmBase algorithm)
+        {
+            algorithm.InputSignal = inputNumberUpDown.Value.ToString();
+            inputSignalTextBox.Text = algorithm.InputSignal;
+            encodedSignalTextBox.Text = algorithm.GetEncodedSignal();
+            realDataSizeTextBox.Text = algorithm.RealDataSize;
+            controlDataSizeTextBox.Text = algorithm.GetRedundantInfromationSize().ToString();
+
+            string interruptedSignal = algorithm.GetInterruptedSignal(bitsToDistort);
+            interruptedSignalTextBox.AppendTextWithSpecificColor(interruptedSignal, Color.Red, bitsToDistort);
+
+            if (algorithm is CRC && ((CRC)algorithm).IsSignalDemaged())
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Red);
+                outputSignalNoControlDataTextBox.AppendText(algorithm.GetDecodedSignal(), Color.Red);
+            }
+            else
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Green);
+                outputSignalNoControlDataTextBox.AppendText(algorithm.GetDecodedSignal(), Color.Green);
             }
         }
-
-        private void manageParityControl()
+        /*private void manageParityControl()
         {
 
         }
@@ -130,7 +158,7 @@ namespace SignalCorrectionApp
         private void manageATM()
         {
 
-        }
+        }*/
 
         private bool isAlgorhitmComboBoxValid(ComboBox comboBox, string caption, MessageBoxButtons buttons)
         {
