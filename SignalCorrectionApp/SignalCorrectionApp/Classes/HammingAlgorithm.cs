@@ -8,82 +8,107 @@ namespace SignalCorrectionApp.Classes
 {
     class HammingAlgorithm : AlgorithmBase
     {
+
+        public StringBuilder interruptedSignal { get; set; }
+        public String encodedSignal { get; set; }
+
+        public HammingAlgorithm()
+        {
+            this.interruptedSignal = new StringBuilder();
+            this.encodedSignal = "";
+        }
+
         public override string GetDecodedSignal()
         {
-            throw new NotImplementedException();
+            List<int> ones = this.getDecodedOnes(this.interruptedSignal.ToString());
+            int interruptedValue = this.interruptedSignal.Length - this.generateValue(ones);
+            if (interruptedValue < this.interruptedSignal.Length)
+                this.interruptedSignal[interruptedValue] = Char.Parse(((int)Char.GetNumericValue(this.interruptedSignal[interruptedValue]) ^ 1).ToString());
+            int additionalData = this.interruptedSignal.Length - this.InputSignal.Length;
+            int length = this.interruptedSignal.Length;
+            for (int i = 0; i < additionalData; i++)
+            {
+                this.interruptedSignal.Remove(length - (int)Math.Pow(2, i), 1);
+            }
+            return this.interruptedSignal.ToString();
         }
 
         public override string GetEncodedSignal()
         {
-            throw new NotImplementedException();
+            List<int> onesPositions = getOnes(this.InputSignal);
+            int powerControl = 1;
+            String encodedText = Convert.ToString(generateValue(onesPositions), 2).PadLeft(8,'0');
+            this.encodedSignal = this.encodedSignal + encodedText.ElementAt(encodedText.Length - 1);
+            for (int i = 1; i <= this.InputSignal.Length; i++)
+            {
+                if ((i + powerControl) == (int)Math.Pow(2, powerControl))
+                {
+                    this.encodedSignal = encodedText.ElementAt(encodedText.Length - powerControl - 1) + this.encodedSignal;
+                    powerControl++;
+                }
+                this.encodedSignal = this.InputSignal.ElementAt(this.InputSignal.Length - i) + this.encodedSignal;
+            }
+            return encodedSignal;
         }
 
         public override string GetInterruptedSignal(IList<int> distortedBits)
         {
-            throw new NotImplementedException();
+            IList<int> revertedDistortedBits = distortedBits.Select(position => encodedSignal.Length - 1 - position).ToList();
+            this.interruptedSignal.Append(encodedSignal);
+            foreach (var bitPosition in revertedDistortedBits)
+            {
+                if (bitPosition >= encodedSignal.Length || bitPosition < 0)
+                    continue;
+
+                this.interruptedSignal[bitPosition] = Char.Parse(((int)Char.GetNumericValue(this.interruptedSignal[bitPosition]) ^ 1).ToString());
+            }
+            return this.interruptedSignal.ToString();
         }
 
         public override int GetRedundantInfromationSize()
         {
-            throw new NotImplementedException();
+            return this.encodedSignal.Length - this.InputSignal.Length;
         }
 
-        /*public List<Tuple<int,int>> getControlBitsPositions(int stringLength)
+        public List<int> getOnes(String text)
         {
-            List<Tuple<int, int>> positions = new List<Tuple<int, int>>();
-            int current = 1;
-            while (current <= stringLength)
-            {
-                positions.Add(new Tuple<int, int>(current,0));
-                current *= 2;
-            }
-            return positions;
-        }*/
-
-       public List<String> getOnes(String text)
-        {
-            List<String> onesPositions = new List<String>();
+            List<int> onesPositions = new List<int>();
+            int positionsController = 2;
             for (int i = 0; i < text.Length; i++)
-            {
-                if (text.ElementAt(i).Equals("1"))
+            {               
+                if (Math.Pow(2, positionsController) == i + 1 + positionsController)
                 {
-                    onesPositions.Add(Convert.ToInt32((i + 1).ToString(), 2).ToString());
+                    positionsController++;
+                }
+                if (text.ElementAt(text.Length - 1 - i).Equals('1'))
+                {
+                    onesPositions.Add(i + 1 + positionsController);
                 }
             }
             return onesPositions;
         }
-        
-        public List<Tuple<int, int>> calculateValues(String text)
+
+        public List<int> getDecodedOnes(String text)
         {
-            List<String> onesPositions = getOnes(text);
-            List<Tuple<int, int>> values =new List<Tuple<int, int>>();
-            Console.WriteLine(text);
-            for (int i = 0; Math.Pow(2,i) <= text.Length; i++)
+            List<int> onesPositions = new List<int>();
+            for (int i = 0; i < text.Length; i++)
             {
-                int value = 0;
-                foreach (string v in onesPositions)
+                if (text.ElementAt(i).Equals('1'))
                 {
-                    value = value | Convert.ToInt32(v.ElementAt(v.Length - (1 + i)));
+                    onesPositions.Add(text.Length - i);
                 }
-                Console.WriteLine(value);
-                values.Add(new Tuple<int, int>((int)Math.Pow(2,i), value));
             }
-            return values;
+            return onesPositions;
         }
-        public String encode(String textToEncode)
+
+        public int generateValue(List<int> onesPositions)
         {
-            String converted = Convert.ToString(Convert.ToInt32(textToEncode), 2);
-            this.calculateValues(converted);
-            /*String encodedText = controlPositions.ElementAt(0).ToString()+controlPositions.ElementAt(1).ToString();
-            for(int i = 2; i < textToEncode.Length; i++)
+            int value = onesPositions.ElementAt(0);
+            for (int i = 1; i < onesPositions.Count; i++)
             {
-                if (controlPositions.Contains(i+1))
-                {
-                    encodedText = (i + 1) + encodedText;
-                }
-                textToEncode
-            }*/
-            return "";
+                value = value ^ onesPositions.ElementAt(i);
+            }
+            return value;
         }
     }
 }
