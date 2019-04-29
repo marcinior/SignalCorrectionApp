@@ -247,6 +247,11 @@ namespace SignalCorrectionApp
             // inputNumberUpDown
             // 
             this.inputNumberUpDown.Location = new System.Drawing.Point(10, 83);
+            this.inputNumberUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.inputNumberUpDown.Name = "inputNumberUpDown";
             this.inputNumberUpDown.Size = new System.Drawing.Size(266, 24);
             this.inputNumberUpDown.TabIndex = 1;
