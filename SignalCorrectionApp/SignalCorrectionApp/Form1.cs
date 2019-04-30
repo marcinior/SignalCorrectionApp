@@ -47,30 +47,32 @@ namespace SignalCorrectionApp
                     //manageParityControl();
                     break;*/
                 case hamming:
-                    algorithm = new HammingAlgorithm();
+                    HammingAlgorithm code = new HammingAlgorithm();
                     //algorithm.encode(inputNumberUpDown.Value.ToString());
-                    //manageHammingCode();
+                    manageHammingCode(code);
                     break;
                 case crc12:
                     algorithm = new CRC(0x180F);
+                    manageCRC(algorithm);
                     //manageCRC12();
                     break;
                 case crc16:
                     algorithm = new CRC(0x18005);
+                    manageCRC(algorithm);
                     //manageCRC16();
                     break;
                 /*case sdlc:
                     //manageSDLC();
                     break;
                 case atm:
-                    //manageATM();
+                    //algorithm = new CRC();
                     break;*/
                 default:
                     return;
             }
-            manage(algorithm);
+            
         }
-        private void manage(AlgorithmBase algorithm)
+        private void manageCRC(AlgorithmBase algorithm)
         {
             algorithm.InputSignal = inputNumberUpDown.Value.ToString();
             inputSignalTextBox.Text = algorithm.InputSignal;
@@ -100,32 +102,39 @@ namespace SignalCorrectionApp
         private void manageHammingCode()
         {
 
-        }
+        }*/
 
-        private void manageCRC12()
+        private void manageHammingCode(HammingAlgorithm hc)
         {
-            CRC crc12 = new CRC(0x180F);
-            crc12.InputSignal = inputNumberUpDown.Value.ToString();
-            inputSignalTextBox.Text = crc12.InputSignal;
-            encodedSignalTextBox.Text = crc12.GetEncodedSignal();
-            realDataSizeTextBox.Text = crc12.RealDataSize;
-            controlDataSizeTextBox.Text = crc12.GetRedundantInfromationSize().ToString();
+            hc.InputSignal = inputNumberUpDown.Value.ToString();
+            inputSignalTextBox.Text = hc.InputSignal;
+            encodedSignalTextBox.Text = hc.GetEncodedSignal();
+            realDataSizeTextBox.Text = hc.RealDataSize;
+            controlDataSizeTextBox.Text = hc.GetRedundantInfromationSize().ToString();
 
-            string interruptedSignal = crc12.GetInterruptedSignal(bitsToDistort);
+            string interruptedSignal = hc.GetInterruptedSignal(bitsToDistort);
             interruptedSignalTextBox.AppendTextWithSpecificColor(interruptedSignal, Color.Red, bitsToDistort);
+            String decodedSignal = hc.GetDecodedSignal();
+            int correctedBit = hc.correctedBit;
+            List<int> invalidBits = hc.getInvalidBits(hc.encodedSignal, hc.interruptedSignal.ToString());
+            int length = interruptedSignal.Length;
 
-            if (crc12.IsSignalDemaged())
+            for(int i = 0; i<length; i++)
             {
-                outputSignalTextBox.AppendText(interruptedSignal, Color.Red);
-                outputSignalNoControlDataTextBox.AppendText(crc12.GetDecodedSignal(), Color.Red);
+                Color color = Color.Green;
+                if (invalidBits.Contains(i))
+                    color = Color.Red;
+                else if (i == correctedBit)
+                    color = Color.Blue;
+                outputSignalTextBox.AppendText(hc.interruptedSignal[i].ToString(), color);
             }
-            else
-            {
-                outputSignalTextBox.AppendText(interruptedSignal, Color.Green);
-                outputSignalNoControlDataTextBox.AppendText(crc12.GetDecodedSignal(), Color.Green);
-            }
+
+            Color textColor = Color.Red;
+            if (hc.InputSignal.Equals(decodedSignal))
+                textColor = Color.Green;
+            outputSignalNoControlDataTextBox.AppendText(decodedSignal, textColor);
         }
-
+        /*
         private void manageCRC16()
         {
             CRC crc16 = new CRC(0x18005);

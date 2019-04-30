@@ -11,6 +11,8 @@ namespace SignalCorrectionApp.Classes
 
         public StringBuilder interruptedSignal { get; set; }
         public String encodedSignal { get; set; }
+        public String finalValue { get; set; }
+        public int correctedBit { get; set; }
 
         public HammingAlgorithm()
         {
@@ -18,19 +20,34 @@ namespace SignalCorrectionApp.Classes
             this.encodedSignal = "";
         }
 
+        public List<int> getInvalidBits(String beginValue, String endValue)
+        {
+            List<int> invalidBits = new List<int>();
+            for(int i = 0; i<beginValue.Length; i++)
+            {
+                if (!beginValue.ElementAt(i).Equals(endValue.ElementAt(i)))
+                    invalidBits.Add(i);
+            }
+            return invalidBits;
+        }
+
         public override string GetDecodedSignal()
         {
             List<int> ones = this.getDecodedOnes(this.interruptedSignal.ToString());
-            int interruptedValue = this.interruptedSignal.Length - this.generateValue(ones);
-            if (interruptedValue < this.interruptedSignal.Length)
-                this.interruptedSignal[interruptedValue] = Char.Parse(((int)Char.GetNumericValue(this.interruptedSignal[interruptedValue]) ^ 1).ToString());
-            int additionalData = this.interruptedSignal.Length - this.InputSignal.Length;
-            int length = this.interruptedSignal.Length;
+            this.correctedBit = this.interruptedSignal.Length - this.generateValue(ones);
+
+            if (this.correctedBit < this.interruptedSignal.Length)
+                this.interruptedSignal[this.correctedBit] = Char.Parse(((int)Char.GetNumericValue(this.interruptedSignal[this.correctedBit]) ^ 1).ToString());
+
+            this.finalValue = interruptedSignal.ToString();
+            int additionalData = this.finalValue.Length - this.InputSignal.Length;
+            int length = this.finalValue.Length;
+
             for (int i = 0; i < additionalData; i++)
             {
-                this.interruptedSignal.Remove(length - (int)Math.Pow(2, i), 1);
+                this.finalValue = this.finalValue.Remove(length - (int)Math.Pow(2, i), 1);
             }
-            return this.interruptedSignal.ToString();
+            return this.finalValue;
         }
 
         public override string GetEncodedSignal()
@@ -39,6 +56,7 @@ namespace SignalCorrectionApp.Classes
             int powerControl = 1;
             String encodedText = Convert.ToString(generateValue(onesPositions), 2).PadLeft(8,'0');
             this.encodedSignal = this.encodedSignal + encodedText.ElementAt(encodedText.Length - 1);
+
             for (int i = 1; i <= this.InputSignal.Length; i++)
             {
                 if ((i + powerControl) == (int)Math.Pow(2, powerControl))
