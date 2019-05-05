@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SignalCorrectionApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using SignalCorrectionApp.Classes;
 
 namespace SignalCorrectionApp
 {
@@ -47,34 +47,37 @@ namespace SignalCorrectionApp
                     ParityControl parityAlgorith = new ParityControl();
                     manageParityControl(parityAlgorith);
                     break;
+
                 case hamming:
                     HammingAlgorithm code = new HammingAlgorithm();
-                    //algorithm.encode(inputNumberUpDown.Value.ToString());
                     manageHammingCode(code);
                     break;
+
                 case crc12:
                     algorithm = new CRC(0x180F);
                     manageCRC(algorithm);
-                    //manageCRC12();
                     break;
+
                 case crc16:
                     algorithm = new CRC(0x18005);
                     manageCRC(algorithm);
-                    //manageCRC16();
                     break;
+
                 case sdlc:
                     algorithm = new CRC(0x11021);
                     manageCRC(algorithm);
                     break;
+
                 case atm:
                     algorithm = new CRC(0x107);
                     manageCRC(algorithm);
                     break;
+
                 default:
                     return;
             }
-            
         }
+
         private void manageCRC(AlgorithmBase algorithm)
         {
             algorithm.InputSignal = inputNumberUpDown.Value.ToString();
@@ -120,13 +123,8 @@ namespace SignalCorrectionApp
                 outputSignalNoControlDataTextBox.AppendText(algorithm.GetDecodedSignal(), Color.Red);
             }
         }
-        /*
-        private void manageHammingCode()
-        {
 
-        }*/
-
-            private void manageHammingCode(HammingAlgorithm hc)
+        private void manageHammingCode(HammingAlgorithm hc)
         {
             hc.InputSignal = inputNumberUpDown.Value.ToString();
             inputSignalTextBox.Text = hc.InputSignal;
@@ -141,7 +139,7 @@ namespace SignalCorrectionApp
             List<int> invalidBits = hc.getInvalidBits(hc.encodedSignal, hc.interruptedSignal.ToString());
             int length = interruptedSignal.Length;
 
-            for(int i = 0; i<length; i++)
+            for (int i = 0; i < length; i++)
             {
                 Color color = Color.Green;
                 if (invalidBits.Contains(i))
@@ -156,40 +154,6 @@ namespace SignalCorrectionApp
                 textColor = Color.Green;
             outputSignalNoControlDataTextBox.AppendText(decodedSignal, textColor);
         }
-        /*
-        private void manageCRC16()
-        {
-            CRC crc16 = new CRC(0x18005);
-            crc16.InputSignal = inputNumberUpDown.Value.ToString();
-            inputSignalTextBox.Text = crc16.InputSignal;
-            encodedSignalTextBox.Text = crc16.GetEncodedSignal();
-            realDataSizeTextBox.Text = crc16.RealDataSize;
-            controlDataSizeTextBox.Text = crc16.GetRedundantInfromationSize().ToString();
-
-            string interruptedSignal = crc16.GetInterruptedSignal(bitsToDistort);
-            interruptedSignalTextBox.AppendTextWithSpecificColor(interruptedSignal, Color.Red, bitsToDistort);
-
-            if (crc16.IsSignalDemaged())
-            {
-                outputSignalTextBox.AppendText(interruptedSignal, Color.Red);
-                outputSignalNoControlDataTextBox.AppendText(crc16.GetDecodedSignal(), Color.Red);
-            }
-            else
-            {
-                outputSignalTextBox.AppendText(interruptedSignal, Color.Green);
-                outputSignalNoControlDataTextBox.AppendText(crc16.GetDecodedSignal(), Color.Green);
-            }        
-        }
-
-        private void manageSDLC()
-        {
-
-        }
-
-        private void manageATM()
-        {
-
-        }*/
 
         private bool isAlgorhitmComboBoxValid(ComboBox comboBox, string caption, MessageBoxButtons buttons)
         {

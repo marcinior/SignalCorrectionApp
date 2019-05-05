@@ -51,7 +51,7 @@ namespace SignalCorrectionApp.Classes
 
             foreach(var bitPosition in revertedDistortedBits)
             {
-                if (bitPosition >= encodedSignal.Length)
+                if (bitPosition >= encodedSignal.Length || bitPosition < 0)
                     continue;
 
                 this.interruptedSignal[bitPosition] = this.interruptedSignal[bitPosition] ^ 1;

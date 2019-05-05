@@ -161,7 +161,7 @@ namespace SignalCorrectionApp
             this.label10.Location = new System.Drawing.Point(71, 646);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(144, 17);
+            this.label10.Size = new System.Drawing.Size(205, 24);
             this.label10.TabIndex = 12;
             this.label10.Text = "Control Data Size [bits]";
             // 
@@ -171,7 +171,7 @@ namespace SignalCorrectionApp
             this.label9.Location = new System.Drawing.Point(71, 554);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(125, 17);
+            this.label9.Size = new System.Drawing.Size(178, 24);
             this.label9.TabIndex = 10;
             this.label9.Text = "Real Data Size [bits]";
             // 
@@ -181,7 +181,7 @@ namespace SignalCorrectionApp
             this.label8.Location = new System.Drawing.Point(71, 454);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(220, 17);
+            this.label8.Size = new System.Drawing.Size(313, 24);
             this.label8.TabIndex = 8;
             this.label8.Text = "Output Signal Without Control Data";
             // 
@@ -191,7 +191,7 @@ namespace SignalCorrectionApp
             this.label7.Location = new System.Drawing.Point(71, 349);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 17);
+            this.label7.Size = new System.Drawing.Size(125, 24);
             this.label7.TabIndex = 6;
             this.label7.Text = "Output Signal";
             // 
@@ -201,7 +201,7 @@ namespace SignalCorrectionApp
             this.label6.Location = new System.Drawing.Point(71, 252);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(116, 17);
+            this.label6.Size = new System.Drawing.Size(161, 24);
             this.label6.TabIndex = 4;
             this.label6.Text = "Interrupted Signal";
             // 
@@ -211,7 +211,7 @@ namespace SignalCorrectionApp
             this.label5.Location = new System.Drawing.Point(71, 157);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 17);
+            this.label5.Size = new System.Drawing.Size(136, 24);
             this.label5.TabIndex = 2;
             this.label5.Text = "Encoded Signal";
             // 
@@ -221,7 +221,7 @@ namespace SignalCorrectionApp
             this.label4.Location = new System.Drawing.Point(71, 56);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 17);
+            this.label4.Size = new System.Drawing.Size(109, 24);
             this.label4.TabIndex = 0;
             this.label4.Text = "Input Signal";
             // 
@@ -252,9 +252,19 @@ namespace SignalCorrectionApp
             0,
             0,
             0});
+            this.inputNumberUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.inputNumberUpDown.Name = "inputNumberUpDown";
-            this.inputNumberUpDown.Size = new System.Drawing.Size(266, 24);
+            this.inputNumberUpDown.Size = new System.Drawing.Size(266, 32);
             this.inputNumberUpDown.TabIndex = 1;
+            this.inputNumberUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // sendButton
             // 
@@ -276,7 +286,7 @@ namespace SignalCorrectionApp
             this.bitsToDistortTextBox.Location = new System.Drawing.Point(10, 278);
             this.bitsToDistortTextBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.bitsToDistortTextBox.Name = "bitsToDistortTextBox";
-            this.bitsToDistortTextBox.Size = new System.Drawing.Size(267, 24);
+            this.bitsToDistortTextBox.Size = new System.Drawing.Size(267, 32);
             this.bitsToDistortTextBox.TabIndex = 0;
             // 
             // label3
@@ -285,7 +295,7 @@ namespace SignalCorrectionApp
             this.label3.Location = new System.Drawing.Point(7, 252);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(90, 17);
+            this.label3.Size = new System.Drawing.Size(130, 26);
             this.label3.TabIndex = 0;
             this.label3.Text = "Bits to Distort";
             // 
@@ -302,7 +312,7 @@ namespace SignalCorrectionApp
             this.algorithmsComboBox.Location = new System.Drawing.Point(10, 184);
             this.algorithmsComboBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.algorithmsComboBox.Name = "algorithmsComboBox";
-            this.algorithmsComboBox.Size = new System.Drawing.Size(267, 25);
+            this.algorithmsComboBox.Size = new System.Drawing.Size(267, 32);
             this.algorithmsComboBox.TabIndex = 0;
             // 
             // label2
@@ -311,7 +321,7 @@ namespace SignalCorrectionApp
             this.label2.Location = new System.Drawing.Point(7, 157);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 17);
+            this.label2.Size = new System.Drawing.Size(152, 26);
             this.label2.TabIndex = 0;
             this.label2.Text = "Used Algorithm ";
             // 
@@ -321,7 +331,7 @@ namespace SignalCorrectionApp
             this.label1.Location = new System.Drawing.Point(7, 56);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 17);
+            this.label1.Size = new System.Drawing.Size(134, 26);
             this.label1.TabIndex = 0;
             this.label1.Text = "Input Number";
             // 
@@ -331,7 +341,7 @@ namespace SignalCorrectionApp
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1006, 752);
