@@ -62,9 +62,10 @@ namespace SignalCorrectionApp
                     manageCRC(algorithm);
                     //manageCRC16();
                     break;
-                /*case sdlc:
-                    //manageSDLC();
-                    break;*/
+                case sdlc:
+                    algorithm = new CRC(0x11021);
+                    manageCRC(algorithm);
+                    break;
                 case atm:
                     algorithm = new CRC(0x107);
                     manageCRC(algorithm);
