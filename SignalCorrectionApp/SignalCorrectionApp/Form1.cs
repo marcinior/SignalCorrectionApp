@@ -43,9 +43,10 @@ namespace SignalCorrectionApp
             AlgorithmBase algorithm;
             switch (algorithmChoice)
             {
-                /*case parity:
-                    //manageParityControl();
-                    break;*/
+                case parity:
+                    ParityControl parityAlgorith = new ParityControl();
+                    manageParityControl(parityAlgorith);
+                    break;
                 case hamming:
                     HammingAlgorithm code = new HammingAlgorithm();
                     //algorithm.encode(inputNumberUpDown.Value.ToString());
@@ -95,17 +96,36 @@ namespace SignalCorrectionApp
                 outputSignalNoControlDataTextBox.AppendText(algorithm.GetDecodedSignal(), Color.Green);
             }
         }
-        /*private void manageParityControl()
+
+        private void manageParityControl(ParityControl algorithm)
         {
+            algorithm.InputSignal = inputNumberUpDown.Value.ToString();
+            inputSignalTextBox.Text = algorithm.InputSignal;
+            encodedSignalTextBox.Text = algorithm.GetEncodedSignal();
+            realDataSizeTextBox.Text = algorithm.RealDataSize;
+            controlDataSizeTextBox.Text = algorithm.GetRedundantInfromationSize().ToString();
 
+            string interruptedSignal = algorithm.GetInterruptedSignal(bitsToDistort);
+            interruptedSignalTextBox.AppendTextWithSpecificColor(interruptedSignal, Color.Red, bitsToDistort);
+
+            if (algorithm.checkSignal())
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Green);
+                outputSignalNoControlDataTextBox.AppendText(algorithm.GetDecodedSignal(), Color.Green);
+            }
+            else
+            {
+                outputSignalTextBox.AppendText(interruptedSignal, Color.Red);
+                outputSignalNoControlDataTextBox.AppendText(algorithm.GetDecodedSignal(), Color.Red);
+            }
         }
-
+        /*
         private void manageHammingCode()
         {
 
         }*/
 
-        private void manageHammingCode(HammingAlgorithm hc)
+            private void manageHammingCode(HammingAlgorithm hc)
         {
             hc.InputSignal = inputNumberUpDown.Value.ToString();
             inputSignalTextBox.Text = hc.InputSignal;
