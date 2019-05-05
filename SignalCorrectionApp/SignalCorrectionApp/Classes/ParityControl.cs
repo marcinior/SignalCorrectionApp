@@ -122,9 +122,7 @@ namespace SignalCorrectionApp.Classes
 
         public override int GetRedundantInfromationSize()
         {
-            int arrayLength = InputSignal.Length % 7 == 0 ? InputSignal.Length + 
-                    InputSignal.Length/7 : InputSignal.Length + InputSignal.Length/7 + 1;
-            return arrayLength;
+            return InputSignal.Length % 7 == 0 ? InputSignal.Length/7 : InputSignal.Length/7 + 1;
         }
 
         public bool checkSignal() {
