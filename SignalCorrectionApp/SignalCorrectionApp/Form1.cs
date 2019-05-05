@@ -63,10 +63,11 @@ namespace SignalCorrectionApp
                     break;
                 /*case sdlc:
                     //manageSDLC();
-                    break;
-                case atm:
-                    //algorithm = new CRC();
                     break;*/
+                case atm:
+                    algorithm = new CRC(0x107);
+                    manageCRC(algorithm);
+                    break;
                 default:
                     return;
             }
